@@ -1,0 +1,111 @@
+/* SearchBar Component Styles */
+
+.search-bar-container {
+  width: 100%;
+}
+
+.search-bar-input {
+  border-radius: 8px !important;
+  background-color: var(--mui-palette-background-paper, #ffffff);
+}
+
+.search-bar-input .MuiOutlinedInput-notchedOutline {
+  border-color: transparent !important;
+  border-width: 0 !important;
+}
+
+.search-bar-input:hover .MuiOutlinedInput-notchedOutline {
+  border-color: transparent !important;
+  border-width: 0 !important;
+}
+
+.search-bar-input.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: transparent !important;
+  border-width: 0 !important;
+}
+
+.search-bar-input .MuiInputBase-input {
+  padding: 12px 14px !important;
+  font-size: 16px !important;
+}
+
+.search-bar-input .MuiInputAdornment-root {
+  margin: 0 !important;
+}
+
+/* Search Icon Button */
+.search-icon-button {
+  color: var(--mui-palette-primary-main, #1976d2) !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.search-icon-button:hover {
+  background-color: var(--mui-palette-primary-light, #42a5f5) !important;
+  color: var(--mui-palette-primary-contrastText, #ffffff) !important;
+}
+
+.search-icon-button:disabled {
+  color: var(--mui-palette-action-disabled, rgba(0, 0, 0, 0.26)) !important;
+}
+
+/* Clear Icon Button */
+.clear-icon-button {
+  color: var(--mui-palette-text-secondary, rgba(0, 0, 0, 0.6)) !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.clear-icon-button:hover {
+  background-color: var(--mui-palette-action-hover, rgba(0, 0, 0, 0.04)) !important;
+}
+
+.clear-icon-button:disabled {
+  color: var(--mui-palette-action-disabled, rgba(0, 0, 0, 0.26)) !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .search-bar-input .MuiInputBase-input {
+    padding: 10px 12px !important;
+    font-size: 14px !important;
+  }
+  
+  .search-bar-input {
+    border-radius: 6px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-bar-input .MuiInputBase-input {
+    padding: 8px 10px !important;
+    font-size: 14px !important;
+  }
+  
+  .search-bar-input {
+    border-radius: 4px !important;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .search-bar-input {
+    background-color: var(--mui-palette-background-paper, #121212);
+  }
+}
+
+/* Animation for focus state */
+.search-bar-input .MuiOutlinedInput-notchedOutline {
+  transition: none !important;
+}
+
+/* Custom variants */
+.search-bar-filled {
+  background-color: var(--mui-palette-action-hover, rgba(0, 0, 0, 0.04)) !important;
+}
+
+.search-bar-filled:hover {
+  background-color: var(--mui-palette-action-selected, rgba(0, 0, 0, 0.08)) !important;
+}
+
+.search-bar-filled.Mui-focused {
+  background-color: var(--mui-palette-background-paper, #ffffff) !important;
+}

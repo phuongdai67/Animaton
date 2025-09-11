@@ -1,0 +1,59 @@
+/* Converted from SCSS to plain CSS */
+.cardContainer {
+  position: relative;
+}
+
+.card {
+  background-color: transparent !important;
+  height: 100%;
+  box-shadow: none !important;
+  transition: 0.2s ease;
+  cursor: pointer;
+}
+
+.card:hover .cardTitle {
+  color: #5b8def; /* fallback for $color-pr-5 */
+}
+
+.cardImage {
+  height: 196px;
+  animation: opacity 0.3s;
+  box-shadow: 0 14px 30px rgba(18, 18, 18, 0.15), 0 4px 4px rgba(18, 18, 18, 0.05);
+  width: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .cardImage {
+    height: 265px; /* breakpoint(md) */
+  }
+}
+
+.cardTitle {
+  margin-top: 8px;
+  text-align: left !important;
+  font-size: 14px; /* fallback for $fs-xs-sm */
+  font-weight: 500;
+  color: #4a5568; /* fallback for $color-text-md */
+  transition: 0.1s ease-in;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+}
+
+.cardTitle:link,
+.cardTitle:visited,
+.cardTitle:hover,
+.cardTitle:active {
+  text-decoration: none;
+}
+
+@keyframes opacity {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
