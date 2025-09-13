@@ -1,8 +1,9 @@
 // base urls
-export const ANIME_BASE_URL = process.env.REACT_APP_ANIME_BASE_URL;
+export const ANIME_BASE_URL = process.env.NEXT_PUBLIC_ANIME_BASE_URL;
 export const SERVER_BASE_URL =
-  process.env.REACT_APP_SERVER_BASE_URL || "http://localhost:3000";
-export const ANILIST_BASE_URL = process.env.REACT_APP_ANILIST_BASE_URL;
+  process.env.NEXT_PUBLIC_SERVER_BASE_URL || "http://localhost:3000";
+export const ANILIST_BASE_URL =
+  process.env.NEXT_PUBLIC_ANILIST_BASE_URL || "https://graphql.anilist.co";
 
 export const CARD_TYPES = {
   DEFAULT: "default",
