@@ -5,10 +5,11 @@
 
 .card {
   background-color: transparent !important;
-  height: 100%;
+  height: 320px;
   box-shadow: none !important;
   transition: 0.2s ease;
   cursor: pointer;
+  width: 215px; /* match image width to keep title from overflowing */
 }
 
 .card:hover .cardTitle {
@@ -18,8 +19,8 @@
 .cardImage {
   height: 196px;
   animation: opacity 0.3s;
-  box-shadow: 0 14px 30px rgba(18, 18, 18, 0.15), 0 4px 4px rgba(18, 18, 18, 0.05);
-  width: 100%;
+  box-shadow: none; /* remove visual spacing between cards */
+  width: 215px;
   object-fit: cover;
   display: block;
 }
@@ -31,18 +32,19 @@
 }
 
 .cardTitle {
-  margin-top: 8px;
-  text-align: left !important;
-  font-size: 14px; /* fallback for $fs-xs-sm */
+  margin-top: 4px;
+  text-align: center;
+  font-size: 14px;
   font-weight: 500;
-  color: #4a5568; /* fallback for $color-text-md */
-  transition: 0.1s ease-in;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
+  color: #4a5568;
+  display: -webkit-box; /* for line clamping */
   -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* clamp to 2 lines with ellipsis */
   overflow: hidden;
   text-overflow: ellipsis;
-  text-decoration: none;
+  max-width: 215px; /* keep within card width */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .cardTitle:link,

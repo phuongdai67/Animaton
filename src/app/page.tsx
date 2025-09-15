@@ -5,10 +5,10 @@ import SearchBar from "../components/SearchBar/SearchBar";
 import Image from "next/image";
 import AnimeCard from "../components/cards/AnimeCard";
 import { useAnimeData } from "../components/hooks/useAnimeData";
+import Button from "../components/ui/Button/Button";
 
 export default function Home() {
   const { animeList, loading, error, hasMore, loadMore } = useAnimeData(20);
-  const observerRef = useRef<HTMLDivElement>(null);
 
   const handleSearch = (query: string) => {
     console.log("Searching for:", query);
@@ -20,31 +20,21 @@ export default function Home() {
     // TODO: Implement real-time search or debounced search
   };
 
-  // Infinite scroll observer
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore && !loading) {
-          loadMore();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [hasMore, loading, loadMore]);
+  // Removed infinite scroll; using manual "Xem thêm" button instead
 
   return (
     <>
       <Header />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 header-spacing">
+      <div
+        className="min-h-screen header-spacing"
+        style={{ backgroundColor: "var(--background)" }}
+      >
         {/* Hero Section */}
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
-          <div className="container mx-auto px-6">
+        <div
+          className="text-gray-900 py-16"
+          style={{ backgroundColor: "var(--background)" }}
+        >
+          <div className="container mx-auto px-6 max-w-6xl">
             <h1 className="text-5xl font-bold mb-4">Anime Collection</h1>
             <p className="text-xl opacity-90">
               Khám phá thế giới anime tuyệt vời
@@ -52,7 +42,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="container mx-auto px-6 py-8">
+        <div className="container mx-auto px-6 max-w-6xl py-8">
           {/* Anime List */}
           <div className="mb-8">
             <h2 className="text-3xl font-bold mb-6 text-gray-800">
@@ -73,7 +63,7 @@ export default function Home() {
               </div>
             )}
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-0 justify-items-center">
               {animeList.map((anime) => (
                 <AnimeCard
                   key={anime.id}
@@ -94,18 +84,30 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Loading indicator for load more */}
-            {loading && animeList.length > 0 && (
-              <div className="flex justify-center items-center py-8">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                <span className="ml-3">Đang tải thêm...</span>
-              </div>
-            )}
-
-            {/* Load more trigger */}
-            {hasMore && !loading && (
-              <div ref={observerRef} className="h-10"></div>
-            )}
+            {/* Load more button */}
+            <div className="flex justify-center py-8">
+              {animeList.length > 0 && (
+                <>
+                  {loading ? (
+                    <Button
+                      className="bg-blue-600 text-white px-6 py-2 rounded disabled:opacity-70"
+                      disabled
+                    >
+                      Đang tải...
+                    </Button>
+                  ) : (
+                    hasMore && (
+                      <Button
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded"
+                        onClick={() => loadMore()}
+                      >
+                        Xem thêm
+                      </Button>
+                    )
+                  )}
+                </>
+              )}
+            </div>
 
             {/* No more data */}
             {!hasMore && animeList.length > 0 && (

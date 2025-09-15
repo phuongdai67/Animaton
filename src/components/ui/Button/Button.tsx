@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import Link from "next/link";
 
-import "./styles.scss";
+import "./styles.css";
 
 interface ButtonProps {
   children: React.ReactNode;
