@@ -9,7 +9,7 @@
   box-shadow: none !important;
   transition: 0.2s ease;
   cursor: pointer;
-  width: 215px; /* match image width to keep title from overflowing */
+  width: 100%; /* let grid cell control width */
 }
 
 .card:hover .cardTitle {
@@ -17,10 +17,11 @@
 }
 
 .cardImage {
-  height: 196px;
+  height: 153px;
   animation: opacity 0.3s;
   box-shadow: none; /* remove visual spacing between cards */
-  width: 215px;
+  width: 100%; /* follow card width */
+  max-width: 100%;
   object-fit: cover;
   display: block;
 }
@@ -40,9 +41,10 @@
   display: -webkit-box; /* for line clamping */
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2; /* clamp to 2 lines with ellipsis */
+  line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 215px; /* keep within card width */
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
