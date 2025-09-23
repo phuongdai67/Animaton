@@ -66,5 +66,24 @@ export async function callAnilistApi<T>(
 }
 
 // REST APIs
-export const callAnimeApi = callApi(ANIME_BASE_URL!);
+export const callAnimeApi = callApi(ANIME_BASE_URL || "");
 export const callServerApi = callApi(SERVER_BASE_URL!);
+
+// Domain-specific helpers
+export type RankingPeriod = "day" | "week" | "month" | "season" | "year";
+
+export async function fetchTopViewedAnime(
+  period: RankingPeriod,
+  limit: number = 10
+) {
+  // Resolve base URL safely to avoid undefined/
+  const base = ANIME_BASE_URL || SERVER_BASE_URL;
+  if (!base) {
+    throw new Error(
+      "Missing base URL. Set NEXT_PUBLIC_ANIME_BASE_URL or NEXT_PUBLIC_SERVER_BASE_URL"
+    );
+  }
+  const url = `${base}/ranking/top-views?period=${period}&limit=${limit}`;
+  const { data } = await axios.get(url);
+  return data;
+}

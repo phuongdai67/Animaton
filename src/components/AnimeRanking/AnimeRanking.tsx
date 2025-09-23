@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import { fetchTopByPeriod } from "../utils/rankingService";
 
 type AnimeItem = {
   id: number;
@@ -10,57 +11,89 @@ type AnimeItem = {
   score: number; // 0-10 scale
 };
 
-const mockRanking: AnimeItem[] = [
-  {
-    id: 1,
-    title: "Fullmetal Alchemist: Brotherhood",
-    coverImage: "/vercel.svg",
-    score: 9.2,
-  },
-  { id: 2, title: "Steins;Gate", coverImage: "/vercel.svg", score: 9.0 },
-  {
-    id: 3,
-    title: "Attack on Titan Season 3 Part 2",
-    coverImage: "/vercel.svg",
-    score: 8.9,
-  },
-  { id: 4, title: "Gintama°", coverImage: "/vercel.svg", score: 8.8 },
-  {
-    id: 5,
-    title: "Hunter x Hunter (2011)",
-    coverImage: "/vercel.svg",
-    score: 8.8,
-  },
-  { id: 6, title: "Monster", coverImage: "/vercel.svg", score: 8.7 },
-  { id: 7, title: "One Piece (Wano)", coverImage: "/vercel.svg", score: 8.6 },
-  { id: 8, title: "Vinland Saga", coverImage: "/vercel.svg", score: 8.6 },
-  { id: 9, title: "Mob Psycho 100 II", coverImage: "/vercel.svg", score: 8.5 },
-  { id: 10, title: "Code Geass R2", coverImage: "/vercel.svg", score: 8.5 },
-];
-
 interface AnimeRankingProps {
   className?: string;
   title?: string;
-  items?: AnimeItem[]; // allow override for real data later
+  // Optional datasets by period; if not provided, falls back to items/mockRanking
+  itemsByPeriod?: Partial<
+    Record<"day" | "week" | "month" | "season" | "year", AnimeItem[]>
+  >;
 }
 
 export default function AnimeRanking({
   className = "",
   title = "Top 10 Anime",
-  items = mockRanking,
+  itemsByPeriod,
 }: AnimeRankingProps) {
+  const [activePeriod, setActivePeriod] = React.useState<
+    "day" | "week" | "month" | "season" | "year"
+  >("day");
+
+  const periods: {
+    key: "day" | "week" | "month" | "season" | "year";
+    label: string;
+  }[] = [
+    { key: "day", label: "Ngày" },
+    { key: "week", label: "Tuần" },
+    { key: "month", label: "Tháng" },
+    { key: "season", label: "Mùa" },
+    { key: "year", label: "Năm" },
+  ];
+
+  const [remoteData, setRemoteData] = React.useState<
+    Partial<Record<"day" | "week" | "month" | "season" | "year", AnimeItem[]>>
+  >({});
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    let isCancelled = false;
+    const key = activePeriod;
+    if (itemsByPeriod?.[key]) return; // prefer external data if provided
+    if (remoteData[key]) return; // cached
+
+    setLoading(true);
+    setError(null);
+    fetchTopByPeriod(key, 10)
+      .then((data) => {
+        if (isCancelled) return;
+        const mapped: AnimeItem[] = (data || []).map((d: any) => ({
+          id: d.id,
+          title: d.title,
+          coverImage: d.coverImage,
+          score: typeof d.score === "number" ? d.score : 0,
+        }));
+        setRemoteData((prev) => ({ ...prev, [key]: mapped }));
+      })
+      .catch((e) => {
+        if (isCancelled) return;
+        setError(e?.message || "Lỗi tải bảng xếp hạng");
+      })
+      .finally(() => {
+        if (isCancelled) return;
+        setLoading(false);
+      });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [activePeriod, itemsByPeriod, remoteData]);
+
+  const displayedItems: AnimeItem[] =
+    itemsByPeriod?.[activePeriod] ?? remoteData[activePeriod] ?? [];
+
   return (
     <aside
       className={`ranking-sidebar ${className}`}
       style={{
-        width: 320,
+        width: "100%",
         maxWidth: "100%",
         height: "fit-content",
         // no maxHeight and no internal scroll per request
         overflow: "visible",
         borderRadius: 12,
         border: "1px solid rgba(255,255,255,0.12)",
-        background: "rgba(17, 24, 39, 0.85)",
+        background: "#80a6f2",
         backdropFilter: "blur(6px)",
         boxShadow: "0 6px 24px rgba(0,0,0,0.25)",
         display: "flex",
@@ -74,7 +107,50 @@ export default function AnimeRanking({
         }}
       >
         <h3 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}> {title} </h3>
+        {/* Tabs */}
+        <div
+          role="tablist"
+          aria-label="Bộ lọc thời gian"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
+            gap: 6,
+            marginTop: 12,
+          }}
+        >
+          {periods.map((p) => {
+            const isActive = p.key === activePeriod;
+            return (
+              <button
+                key={p.key}
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setActivePeriod(p.key)}
+                style={{
+                  width: "100%",
+                  padding: "5px 8px",
+                  borderRadius: 8,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  border: isActive
+                    ? "1px solid rgba(255,255,255,0.6)"
+                    : "1px solid rgba(255,255,255,0.12)",
+                  background: isActive
+                    ? "rgba(255,255,255,0.08)"
+                    : "transparent",
+                  color: "inherit",
+                  cursor: "pointer",
+                  textAlign: "center",
+                }}
+              >
+                {p.label}
+              </button>
+            );
+          })}
+        </div>
       </div>
+
+      {error && <div style={{ padding: 12, color: "#fca5a5" }}>{error}</div>}
 
       <ol
         style={{
@@ -85,7 +161,10 @@ export default function AnimeRanking({
           overflowY: "visible",
         }}
       >
-        {items.slice(0, 10).map((anime, index) => (
+        {loading && !(itemsByPeriod && itemsByPeriod[activePeriod]) && (
+          <li style={{ padding: 12, opacity: 0.8 }}>Đang tải...</li>
+        )}
+        {displayedItems.slice(0, 10).map((anime, index) => (
           <li
             key={anime.id}
             style={{

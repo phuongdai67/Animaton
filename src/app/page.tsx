@@ -207,7 +207,7 @@ export default function Home() {
             </div>
 
             {/* Right Sidebar (non-sticky, pushed right) */}
-            <div className="w-full lg:w-[340px] shrink-0 lg:self-start lg:ml-auto -mr-6">
+            <div className="w-full lg:w-[400px] shrink-0 lg:self-start lg:ml-auto lg:-mr-12 mt-6 lg:mt-16 lg:transform lg:translate-x-4">
               <AnimeRanking />
             </div>
           </div>
