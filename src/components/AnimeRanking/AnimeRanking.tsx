@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { fetchTopByPeriod } from "../utils/rankingService";
+import "./AnimeRanking.css";
 
 type AnimeItem = {
   id: number;
@@ -83,40 +84,14 @@ export default function AnimeRanking({
     itemsByPeriod?.[activePeriod] ?? remoteData[activePeriod] ?? [];
 
   return (
-    <aside
-      className={`ranking-sidebar ${className}`}
-      style={{
-        width: "100%",
-        maxWidth: "100%",
-        height: "fit-content",
-        // no maxHeight and no internal scroll per request
-        overflow: "visible",
-        borderRadius: 12,
-        border: "1px solid rgba(255,255,255,0.12)",
-        background: "#80a6f2",
-        backdropFilter: "blur(6px)",
-        boxShadow: "0 6px 24px rgba(0,0,0,0.25)",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <div
-        style={{
-          padding: 16,
-          borderBottom: "1px solid rgba(255,255,255,0.08)",
-        }}
-      >
-        <h3 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}> {title} </h3>
+    <aside className={`ranking-sidebar ${className}`}>
+      <div className="ranking-header">
+        <h3 className="ranking-title">{title}</h3>
         {/* Tabs */}
         <div
           role="tablist"
           aria-label="Bộ lọc thời gian"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
-            gap: 6,
-            marginTop: 12,
-          }}
+          className="period-tabs"
         >
           {periods.map((p) => {
             const isActive = p.key === activePeriod;
@@ -126,22 +101,7 @@ export default function AnimeRanking({
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => setActivePeriod(p.key)}
-                style={{
-                  width: "100%",
-                  padding: "5px 8px",
-                  borderRadius: 8,
-                  fontSize: 13,
-                  fontWeight: 600,
-                  border: isActive
-                    ? "1px solid rgba(255,255,255,0.6)"
-                    : "1px solid rgba(255,255,255,0.12)",
-                  background: isActive
-                    ? "rgba(255,255,255,0.08)"
-                    : "transparent",
-                  color: "inherit",
-                  cursor: "pointer",
-                  textAlign: "center",
-                }}
+                className={`period-tab ${isActive ? "period-tab-active" : ""}`}
               >
                 {p.label}
               </button>
@@ -150,92 +110,48 @@ export default function AnimeRanking({
         </div>
       </div>
 
-      {error && <div style={{ padding: 12, color: "#fca5a5" }}>{error}</div>}
+      {error && <div className="error-message">{error}</div>}
 
-      <ol
-        style={{
-          margin: 0,
-          padding: 12,
-          listStyle: "none",
-          // no internal scroll
-          overflowY: "visible",
-        }}
-      >
+      <ol className="ranking-list">
         {loading && !(itemsByPeriod && itemsByPeriod[activePeriod]) && (
-          <li style={{ padding: 12, opacity: 0.8 }}>Đang tải...</li>
+          <li className="loading-message">Đang tải...</li>
         )}
-        {displayedItems.slice(0, 10).map((anime, index) => (
-          <li
-            key={anime.id}
-            style={{
-              display: "grid",
-              gridTemplateColumns: "28px 52px 1fr auto",
-              alignItems: "center",
-              gap: 12,
-              padding: "10px 8px",
-              borderRadius: 10,
-              transition: "background 0.2s ease",
-            }}
-          >
-            <span
-              style={{
-                width: 28,
-                height: 28,
-                borderRadius: 8,
-                background:
-                  index < 3
-                    ? "linear-gradient(135deg, #f59e0b, #ef4444)"
-                    : "#1f2937",
-                display: "grid",
-                placeItems: "center",
-                fontWeight: 800,
-                fontSize: 13,
-              }}
-            >
-              {index + 1}
-            </span>
+        {displayedItems.slice(0, 10).map((anime, index) => {
+          const getRankClass = () => {
+            if (index === 0) return "rank-1st";
+            if (index === 1) return "rank-2nd";
+            if (index === 2) return "rank-3rd";
+            if (index === 3) return "rank-4th";
+            return "";
+          };
 
-            <div
-              style={{
-                width: 52,
-                height: 52,
-                position: "relative",
-                borderRadius: 8,
-                overflow: "hidden",
-                background: "#111827",
-              }}
-            >
-              <Image
-                src={anime.coverImage}
-                alt={anime.title}
-                fill
-                sizes="52px"
-                style={{ objectFit: "cover" }}
-              />
-            </div>
+          return (
+            <li key={anime.id} className="ranking-item">
+              <span className={`rank-number ${getRankClass()}`}>
+                {index + 1}
+              </span>
 
-            <div style={{ minWidth: 0 }}>
-              <div
-                style={{
-                  fontWeight: 600,
-                  fontSize: 14,
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
-              >
-                {anime.title}
+              <div className="anime-cover">
+                <Image
+                  src={anime.coverImage}
+                  alt={anime.title}
+                  fill
+                  sizes="52px"
+                  style={{ objectFit: "cover" }}
+                />
               </div>
-              <div style={{ fontSize: 12, opacity: 0.7 }}>
-                Score: {anime.score.toFixed(1)}
-              </div>
-            </div>
 
-            <div style={{ fontWeight: 700, fontSize: 13, opacity: 0.9 }}>
-              {anime.score.toFixed(1)}
-            </div>
-          </li>
-        ))}
+              <div className="anime-info">
+                <div className="anime-title">{anime.title}</div>
+                {/* <div className="anime-score-label">
+                  Score: {anime.score.toFixed(1)}
+                </div> */}
+              </div>
+
+              <div className="anime-score">{anime.score.toFixed(1)}</div>
+            </li>
+          );
+        })}
       </ol>
     </aside>
   );
