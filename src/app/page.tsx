@@ -4,9 +4,11 @@ import Header from "../components/Header/Header";
 import SearchBar from "../components/SearchBar/SearchBar";
 import Image from "next/image";
 import AnimeCard from "../components/cards/AnimeCard";
+
 import { useAnimeData } from "../components/hooks/useAnimeData";
 import Button from "../components/ui/Button/Button";
 import AnimeRanking from "../components/AnimeRanking/AnimeRanking";
+import SkeletonCard from "@/components/SkeletonCard/SkeletonCard";
 
 export default function Home() {
   const { animeList, loading, error, hasMore, loadMore } = useAnimeData(20);
@@ -59,33 +61,38 @@ export default function Home() {
                   </div>
                 )}
 
+                {/* Show skeletons on initial load */}
                 {loading && animeList.length === 0 && (
-                  <div className="flex justify-center items-center py-12">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-                    <span className="ml-3 text-lg">Đang tải anime...</span>
+                  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-5 justify-items-center">
+                    {Array.from({ length: 8 }).map((_, index) => (
+                      <SkeletonCard key={index} />
+                    ))}
                   </div>
                 )}
 
-                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-5 justify-items-center">
-                  {animeList.map((anime) => (
-                    <AnimeCard
-                      key={anime.id}
-                      data={{
-                        id: anime.id,
-                        type: "ANIME",
-                        title: {
-                          english:
-                            anime.title.english ||
-                            anime.title.romaji ||
-                            anime.title.native,
-                        },
-                        coverImage: {
-                          large: anime.coverImage.large,
-                        },
-                      }}
-                    />
-                  ))}
-                </div>
+                {/* Show actual anime cards */}
+                {animeList.length > 0 && (
+                  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-5 justify-items-center">
+                    {animeList.map((anime) => (
+                      <AnimeCard
+                        key={anime.id}
+                        data={{
+                          id: anime.id,
+                          type: "ANIME",
+                          title: {
+                            english:
+                              anime.title.english ||
+                              anime.title.romaji ||
+                              anime.title.native,
+                          },
+                          coverImage: {
+                            large: anime.coverImage.large,
+                          },
+                        }}
+                      />
+                    ))}
+                  </div>
+                )}
 
                 {/* Load more button */}
                 <div className="flex justify-center py-8">
@@ -111,6 +118,15 @@ export default function Home() {
                     </>
                   )}
                 </div>
+
+                {/* Show skeletons when loading more */}
+                {loading && animeList.length > 0 && (
+                  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-5 justify-items-center mt-6">
+                    {Array.from({ length: 4 }).map((_, index) => (
+                      <SkeletonCard key={`loading-${index}`} />
+                    ))}
+                  </div>
+                )}
 
                 {/* No more data */}
                 {!hasMore && animeList.length > 0 && (

@@ -5,7 +5,8 @@
 
 .card {
   background-color: transparent !important;
-  height: 320px;
+  /* height: 320px; */
+  min-height: 320px;
   box-shadow: none !important;
   transition: 0.2s ease;
   cursor: pointer;

@@ -1,0 +1,55 @@
+.card-horizontal {
+    width: 100%;
+    height: 80px;
+    background-color: rgb(255, 255, 255);
+    padding: 8px;
+    box-shadow: 
+        0 14px 30px rgba(103, 132, 187, 0.15),
+        0 4px 4px rgba(103, 132, 187, 0.05);
+}
+
+.card-horizontal,
+.card-square {
+    animation: scaleUpCenter 0.2s linear;
+}
+
+.card-square {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 
+        0 14px 30px rgba(103, 132, 187, 0.15),
+        0 4px 4px rgba(103, 132, 187, 0.05);
+}
+
+.skeleton-card-image {
+    width: 100%;
+    display: block;
+    height: 153px;               
+    object-fit: cover;          
+    border-radius: 0;            
+    animation: pulse 1.5s ease-in-out infinite !important;
+  }
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes scaleUpCenter {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);    
+        opacity: 1;
+    }
+}
+.cardContainer, .card {
+    width: 100%;
+    box-shadow: none; 
+    background: transparent;
+  }
