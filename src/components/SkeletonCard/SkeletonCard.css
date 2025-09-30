@@ -1,3 +1,5 @@
+/* Skeleton Card Styles */
+
 .card-horizontal {
     width: 100%;
     height: 80px;
@@ -6,10 +8,6 @@
     box-shadow: 
         0 14px 30px rgba(103, 132, 187, 0.15),
         0 4px 4px rgba(103, 132, 187, 0.05);
-}
-
-.card-horizontal,
-.card-square {
     animation: scaleUpCenter 0.2s linear;
 }
 
@@ -18,24 +16,7 @@
     box-shadow: 
         0 14px 30px rgba(103, 132, 187, 0.15),
         0 4px 4px rgba(103, 132, 187, 0.05);
-}
-
-.skeleton-card-image {
-    width: 100%;
-    display: block;
-    height: 153px;               
-    object-fit: cover;          
-    border-radius: 0;            
-    animation: pulse 1.5s ease-in-out infinite !important;
-  }
-
-@keyframes pulse {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.7;
-    }
+    animation: scaleUpCenter 0.2s linear;
 }
 
 @keyframes scaleUpCenter {
@@ -48,8 +29,3 @@
         opacity: 1;
     }
 }
-.cardContainer, .card {
-    width: 100%;
-    box-shadow: none; 
-    background: transparent;
-  }

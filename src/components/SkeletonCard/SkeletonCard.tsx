@@ -4,6 +4,8 @@ import Stack from "@mui/material/Stack";
 
 import { CARD_TYPES } from "../../components/utils/constants";
 import "./SkeletonCard.css";
+// Import AnimeCard CSS to use its classes
+import "../cards/AnimeCard.css";
 
 interface SkeletonCardProps {
   children?: React.ReactNode;
@@ -23,12 +25,14 @@ const SkeletonCard: React.FC<SkeletonCardProps> = ({
       <Stack className="card-horizontal" direction="row" alignItems="center">
         <Stack direction="row" alignItems="center" style={{ width: "50%" }}>
           <Skeleton
+            animation="wave"
             sx={{ bgcolor: "#c4d4e4", borderRadius: "3px" }}
             variant="rectangular"
             height={60}
             width={48}
           />
           <Skeleton
+            animation="wave"
             sx={{ bgcolor: "#c4d4e4", borderRadius: "3px" }}
             style={{ marginLeft: "8px" }}
             variant="text"
@@ -37,6 +41,7 @@ const SkeletonCard: React.FC<SkeletonCardProps> = ({
           />
         </Stack>
         <Skeleton
+          animation="wave"
           sx={{ bgcolor: "#c4d4e4", borderRadius: "3px" }}
           variant="text"
           width="30%"
@@ -50,6 +55,7 @@ const SkeletonCard: React.FC<SkeletonCardProps> = ({
     return (
       <Stack className="card-square" direction="row" height={265}>
         <Skeleton
+          animation="wave"
           sx={{ bgcolor: "#c4d4e4", borderRadius: "3px" }}
           variant="rectangular"
           height={265}
@@ -57,6 +63,7 @@ const SkeletonCard: React.FC<SkeletonCardProps> = ({
         />
         <Stack style={{ width: "100%" }}>
           <Skeleton
+            animation="wave"
             sx={{ bgcolor: "#c4d4e4", borderRadius: "3px" }}
             style={{ margin: "12px" }}
             variant="text"
@@ -64,6 +71,7 @@ const SkeletonCard: React.FC<SkeletonCardProps> = ({
             height={28}
           />
           <Skeleton
+            animation="wave"
             sx={{ bgcolor: "#c4d4e4", borderRadius: "3px" }}
             style={{ marginLeft: "8px", marginBottom: "12px" }}
             variant="text"
@@ -71,6 +79,7 @@ const SkeletonCard: React.FC<SkeletonCardProps> = ({
             height={20}
           />
           <Skeleton
+            animation="wave"
             sx={{ bgcolor: "#c4d4e4", borderRadius: "3px" }}
             style={{ marginLeft: "8px", marginBottom: "12px" }}
             variant="text"
@@ -82,40 +91,56 @@ const SkeletonCard: React.FC<SkeletonCardProps> = ({
     );
   }
 
-  // Default case - matches AnimeCard structure exactly
+  // Default case - simplified with inline styles to ensure it renders
   return (
-    <div className="cardContainer">
-      <div className="card">
-        {/* Image skeleton - matches .cardImage */}
+    <div style={{ position: "relative", width: "100%" }}>
+      <div
+        style={{
+          backgroundColor: "transparent",
+          height: "320px",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {/* Image skeleton */}
         <Skeleton
-          sx={{
-            bgcolor: "#c4d4e4",
-            borderRadius: "3px",
-          }}
+          animation="wave"
           variant="rectangular"
-          className="cardImage skeleton-card-image"
+          sx={{
+            bgcolor: "#e5e7eb",
+            width: "100%",
+            height: { xs: "153px", md: "265px" }, // Responsive height
+            borderRadius: "8px",
+          }}
         />
-        {/* Title skeleton - matches .cardTitle */}
-        <div className="cardTitle" style={{ display: "block", height: "auto" }}>
+        {/* Title skeleton */}
+        <div
+          style={{
+            marginTop: "8px",
+            textAlign: "center",
+            padding: "0 4px",
+          }}
+        >
           <Skeleton
-            sx={{
-              bgcolor: "#c4d4e4",
-              borderRadius: "3px",
-            }}
+            animation="wave"
             variant="text"
-            width="90%"
-            height={18}
-            style={{ margin: "0 auto" }}
+            sx={{
+              bgcolor: "#e5e7eb",
+              width: "85%",
+              margin: "0 auto 4px",
+              height: "18px",
+            }}
           />
           <Skeleton
-            sx={{
-              bgcolor: "#c4d4e4",
-              borderRadius: "3px",
-            }}
+            animation="wave"
             variant="text"
-            width="70%"
-            height={18}
-            style={{ margin: "0 auto" }}
+            sx={{
+              bgcolor: "#e5e7eb",
+              width: "60%",
+              margin: "0 auto",
+              height: "18px",
+            }}
           />
         </div>
       </div>

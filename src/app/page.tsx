@@ -23,8 +23,6 @@ export default function Home() {
     // TODO: Implement real-time search or debounced search
   };
 
-  // Removed infinite scroll; using manual "Xem thêm" button instead
-
   return (
     <>
       <Header />
@@ -53,13 +51,6 @@ export default function Home() {
                 <h2 className="text-3xl font-bold mb-6 text-gray-800">
                   Anime Mới Nhất
                 </h2>
-
-                {error && (
-                  <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
-                    <p className="font-bold">Lỗi tải dữ liệu:</p>
-                    <p>{error}</p>
-                  </div>
-                )}
 
                 {/* Show skeletons on initial load */}
                 {loading && animeList.length === 0 && (
@@ -95,29 +86,16 @@ export default function Home() {
                 )}
 
                 {/* Load more button */}
-                <div className="flex justify-center py-8">
-                  {animeList.length > 0 && (
-                    <>
-                      {loading ? (
-                        <Button
-                          className="bg-blue-600 text-white px-6 py-2 rounded disabled:opacity-70"
-                          disabled
-                        >
-                          Đang tải...
-                        </Button>
-                      ) : (
-                        hasMore && (
-                          <Button
-                            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded"
-                            onClick={() => loadMore()}
-                          >
-                            Xem thêm
-                          </Button>
-                        )
-                      )}
-                    </>
-                  )}
-                </div>
+                {animeList.length > 0 && hasMore && !loading && (
+                  <div className="flex justify-center py-8">
+                    <Button
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded"
+                      onClick={() => loadMore()}
+                    >
+                      Xem thêm
+                    </Button>
+                  </div>
+                )}
 
                 {/* Show skeletons when loading more */}
                 {loading && animeList.length > 0 && (
