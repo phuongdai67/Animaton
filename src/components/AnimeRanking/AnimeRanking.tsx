@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { fetchTopByPeriod } from "../utils/rankingService";
+import AnimeRankingSkeleton from "../SkeletonCard/AnimeRankingSkeleton";
 import "./AnimeRanking.css";
 
 type AnimeItem = {
@@ -46,6 +47,7 @@ export default function AnimeRanking({
   >({});
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+  const [initialLoad, setInitialLoad] = React.useState(true);
 
   React.useEffect(() => {
     let isCancelled = false;
@@ -73,6 +75,7 @@ export default function AnimeRanking({
       .finally(() => {
         if (isCancelled) return;
         setLoading(false);
+        setInitialLoad(false);
       });
 
     return () => {
@@ -82,6 +85,11 @@ export default function AnimeRanking({
 
   const displayedItems: AnimeItem[] =
     itemsByPeriod?.[activePeriod] ?? remoteData[activePeriod] ?? [];
+
+  // Show skeleton when loading and no data
+  if (loading && displayedItems.length === 0) {
+    return <AnimeRankingSkeleton />;
+  }
 
   return (
     <aside className={`ranking-sidebar ${className}`}>
@@ -113,9 +121,6 @@ export default function AnimeRanking({
       {error && <div className="error-message">{error}</div>}
 
       <ol className="ranking-list">
-        {loading && !(itemsByPeriod && itemsByPeriod[activePeriod]) && (
-          <li className="loading-message">Đang tải...</li>
-        )}
         {displayedItems.slice(0, 10).map((anime, index) => {
           const getRankClass = () => {
             if (index === 0) return "rank-1st";
@@ -143,9 +148,6 @@ export default function AnimeRanking({
 
               <div className="anime-info">
                 <div className="anime-title">{anime.title}</div>
-                {/* <div className="anime-score-label">
-                  Score: {anime.score.toFixed(1)}
-                </div> */}
               </div>
 
               <div className="anime-score">{anime.score.toFixed(1)}</div>

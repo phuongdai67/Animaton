@@ -1,0 +1,11 @@
+/* AnimeRankingSkeleton.css */
+
+.ranking-item-skeleton {
+    display: grid;
+    grid-template-columns: 28px 52px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 8px;
+    border-radius: 10px;
+    list-style: none;
+  }

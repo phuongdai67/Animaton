@@ -9,6 +9,7 @@ import { useAnimeData } from "../components/hooks/useAnimeData";
 import Button from "../components/ui/Button/Button";
 import AnimeRanking from "../components/AnimeRanking/AnimeRanking";
 import SkeletonCard from "@/components/SkeletonCard/SkeletonCard";
+import PopularGenres from "@/components/PopularGenres/PopularGenres";
 
 export default function Home() {
   const { animeList, loading, error, hasMore, loadMore } = useAnimeData(20);
@@ -146,61 +147,9 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Popular Genres */}
-              <div className="bg-white rounded-lg shadow-lg p-6">
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">
-                  Thể Loại Phổ Biến
-                </h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {(() => {
-                    // Count genre frequency from loaded anime
-                    const genreCount: { [key: string]: number } = {};
-                    animeList.forEach((anime) => {
-                      anime.genres?.forEach((genre) => {
-                        genreCount[genre] = (genreCount[genre] || 0) + 1;
-                      });
-                    });
-
-                    // Get top 8 most popular genres
-                    const topGenres = Object.entries(genreCount)
-                      .sort(([, a], [, b]) => b - a)
-                      .slice(0, 8)
-                      .map(([genre]) => genre);
-
-                    // Fallback to default genres if no data yet
-                    const displayGenres =
-                      topGenres.length > 0
-                        ? topGenres
-                        : [
-                            "Action",
-                            "Romance",
-                            "Comedy",
-                            "Drama",
-                            "Fantasy",
-                            "Sci-Fi",
-                            "Horror",
-                            "Slice of Life",
-                          ];
-
-                    return displayGenres.map((genre) => (
-                      <div
-                        key={genre}
-                        className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 rounded-lg text-center hover:from-blue-600 hover:to-purple-700 transition-all cursor-pointer"
-                      >
-                        <div className="font-semibold">{genre}</div>
-                        {genreCount[genre] && (
-                          <div className="text-xs opacity-75 mt-1">
-                            {genreCount[genre]} anime
-                          </div>
-                        )}
-                      </div>
-                    ));
-                  })()}
-                </div>
-              </div>
+              <PopularGenres animeList={animeList} />
             </div>
 
-            {/* Right Sidebar (non-sticky, pushed right) */}
             <div className="w-full lg:w-[400px] shrink-0 lg:self-start lg:ml-auto lg:-mr-12 mt-6 lg:mt-16 lg:transform lg:translate-x-4">
               <AnimeRanking />
             </div>
