@@ -1,0 +1,26 @@
+.page-not-found-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  
+    display: flex; /* dùng flex để dễ căn giữa */
+    justify-content: center;
+    align-items: center;
+  
+    background: url("../../assets/1271.png") center no-repeat;
+    background-size: 95%; /* giảm độ phóng to ảnh  */
+    background-color: rgb(240, 244, 249); /* thêm nền nhẹ để tông hài hòa */
+    
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .btn-go-home {
+    position: absolute;
+    top: 80%; /* đẩy nút xuống dưới ảnh một chút */
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
