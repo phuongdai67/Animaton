@@ -9,9 +9,11 @@
     justify-content: center;
     align-items: center;
   
-    background: url("../../assets/1271.png") center no-repeat;
-    background-size: 95%; /* giảm độ phóng to ảnh  */
-    background-color: rgb(240, 244, 249); /* thêm nền nhẹ để tông hài hòa */
+    /* background: url("../../assets/1271.png") center no-repeat; */
+    background: url("../../assets/4042.jpg") center no-repeat;
+    background-size: 40%; /* giảm độ phóng to ảnh  */
+    /* background-color: rgb(240, 244, 249);  */
+    background-color: #ffffff;
     
     height: 100vh;
     margin: 0;
