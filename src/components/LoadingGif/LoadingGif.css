@@ -1,0 +1,41 @@
+/* .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    padding: 2rem;
+  } */
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;      /* Căn giữa theo chiều ngang */
+    justify-content: center;  /* Căn giữa theo chiều dọc */
+    height: 100vh;            /* Chiếm toàn bộ chiều cao màn hình */
+    width: 100%;              /* Chiếm toàn bộ chiều rộng */
+    padding: 2rem;
+  }
+  
+  .loading-gif {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 12px;
+  }
+  
+  .loading-text {
+    margin-top: 1rem;
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #4b5563;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }

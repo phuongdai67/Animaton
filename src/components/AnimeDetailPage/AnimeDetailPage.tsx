@@ -4,6 +4,7 @@ import { callAnilistApi } from "@/components/utils/api";
 import Image from "next/image";
 import Link from "next/link";
 import "./AnimeDetailPage.css";
+import LoadingGif from "../LoadingGif/LoadingGif";
 
 interface AnimeDetail {
   id: number;
@@ -208,11 +209,7 @@ export default function AnimeDetailPage({ id }: AnimeDetailPageProps) {
   }, [id]);
 
   if (loading) {
-    return (
-      <div className="anime-detail-loading">
-        <div className="loading-text">Đang tải...</div>
-      </div>
-    );
+    return <LoadingGif />;
   }
 
   if (error || !anime) {
