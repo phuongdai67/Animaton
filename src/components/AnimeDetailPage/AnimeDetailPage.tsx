@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { callAnilistApi } from "@/components/utils/api";
 import Image from "next/image";
 import Link from "next/link";
+import LoadingGif from "@/components/LoadingGif/LoadingGif";
 import "./AnimeDetailPage.css";
-import LoadingGif from "../LoadingGif/LoadingGif";
 
 interface AnimeDetail {
   id: number;
@@ -13,6 +13,7 @@ interface AnimeDetail {
     english: string;
     native: string;
   };
+  synonyms: string[];
   description: string;
   coverImage: {
     extraLarge: string;
@@ -69,6 +70,7 @@ interface AnimeDetail {
   trailer: {
     id: string;
     site: string;
+    thumbnail: string;
   };
   startDate: {
     year: number;
@@ -91,6 +93,7 @@ query ($id: Int) {
       english
       native
     }
+    synonyms
     description
     coverImage {
       extraLarge
@@ -110,7 +113,7 @@ query ($id: Int) {
     format
     source
     genres
-    studios {
+    studios(isMain: true) {
       nodes {
         name
         isAnimationStudio
@@ -162,6 +165,7 @@ query ($id: Int) {
     trailer {
       id
       site
+      thumbnail
     }
     startDate {
       year
@@ -222,6 +226,34 @@ export default function AnimeDetailPage({ id }: AnimeDetailPageProps) {
 
   const mainStudio = anime.studios.nodes.find((s) => s.isAnimationStudio);
 
+  // Format date helper
+  const formatDate = (date: { year: number; month: number; day: number }) => {
+    if (!date.year) return "?";
+    const day = date.day?.toString().padStart(2, "0") || "??";
+    const month = date.month?.toString().padStart(2, "0") || "??";
+    return `${day}-${month}-${date.year}`;
+  };
+
+  // Format season
+  const formatSeason = () => {
+    if (!anime.season || !anime.seasonYear) return "?";
+    return `${anime.season} ${anime.seasonYear}`;
+  };
+
+  // Get format label from constants
+  const getFormatLabel = (format: string) => {
+    const formats: Record<string, string> = {
+      TV: "TV Show",
+      TV_SHORT: "TV Short",
+      MOVIE: "Movie",
+      SPECIAL: "Special",
+      OVA: "OVA",
+      ONA: "ONA",
+      MUSIC: "Music",
+    };
+    return formats[format] || format;
+  };
+
   return (
     <div className="anime-detail-page">
       {/* Banner Section */}
@@ -278,34 +310,110 @@ export default function AnimeDetailPage({ id }: AnimeDetailPageProps) {
             </div>
 
             <div className="anime-info-grid">
-              <div className="info-item">
-                <span className="info-label">Format:</span>
-                <span className="info-value">{anime.format}</span>
-              </div>
-              <div className="info-item">
-                <span className="info-label">Episodes:</span>
-                <span className="info-value">{anime.episodes || "?"}</span>
-              </div>
-              <div className="info-item">
-                <span className="info-label">Status:</span>
-                <span className="info-value">{anime.status}</span>
-              </div>
-              <div className="info-item">
-                <span className="info-label">Duration:</span>
-                <span className="info-value">{anime.duration} mins</span>
-              </div>
-              <div className="info-item">
-                <span className="info-label">Season:</span>
+              <div className="info-item format">
+                <span
+                  className="info-label"
+                  style={{ color: "#7488a6", fontWeight: "bold" }}
+                >
+                  Format:
+                </span>
                 <span className="info-value">
-                  {anime.season} {anime.seasonYear}
+                  {getFormatLabel(anime.format)}
                 </span>
               </div>
-              <div className="info-item">
-                <span className="info-label">Studio:</span>
+
+              <div className="info-item episodes">
+                <span
+                  className="info-label"
+                  style={{ color: "#7488a6", fontWeight: "bold" }}
+                >
+                  Episodes:
+                </span>
+                <span className="info-value">{anime.episodes || "?"}</span>
+              </div>
+
+              <div className="info-item duration">
+                <span
+                  className="info-label"
+                  style={{ color: "#7488a6", fontWeight: "bold" }}
+                >
+                  Duration:
+                </span>
+                <span className="info-value">
+                  {anime.duration ? `${anime.duration} mins` : "?"}
+                </span>
+              </div>
+
+              <div className="info-item status">
+                <span
+                  className="info-label"
+                  style={{ color: "#7488a6", fontWeight: "bold" }}
+                >
+                  Status:
+                </span>
+                <span className="info-value">{anime.status}</span>
+              </div>
+
+              <div className="info-item start-date">
+                <span
+                  className="info-label"
+                  style={{ color: "#7488a6", fontWeight: "bold" }}
+                >
+                  Start Date:
+                </span>
+                <span className="info-value">
+                  {formatDate(anime.startDate)}
+                </span>
+              </div>
+
+              <div className="info-item end-date">
+                <span
+                  className="info-label"
+                  style={{ color: "#7488a6", fontWeight: "bold" }}
+                >
+                  End Date:
+                </span>
+                <span className="info-value">{formatDate(anime.endDate)}</span>
+              </div>
+
+              <div className="info-item season">
+                <span
+                  className="info-label"
+                  style={{ color: "#7488a6", fontWeight: "bold" }}
+                >
+                  Season:
+                </span>
+                <span className="info-value">{formatSeason()}</span>
+              </div>
+
+              <div className="info-item studio">
+                <span
+                  className="info-label"
+                  style={{ color: "#7488a6", fontWeight: "bold" }}
+                >
+                  Studio:
+                </span>
                 <span className="info-value">
                   {mainStudio?.name || "Unknown"}
                 </span>
               </div>
+
+              {anime.synonyms && anime.synonyms.length > 0 && (
+                <div
+                  className="info-item synonyms"
+                  style={{ gridColumn: "1 / -1" }}
+                >
+                  <span
+                    className="info-label"
+                    style={{ color: "#7488a6", fontWeight: "bold" }}
+                  >
+                    Synonyms:
+                  </span>
+                  <span className="info-value">
+                    {anime.synonyms.join(", ")}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>

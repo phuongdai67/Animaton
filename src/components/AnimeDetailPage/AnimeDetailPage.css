@@ -101,7 +101,41 @@
   opacity: 0.8;
   margin-bottom: 1rem;
 }
+.info-item.format .info-value {
+  color: #18c1f0;
+}
 
+.info-item.episodes .info-value {
+  color: #18c1f0; 
+}
+
+.info-item.duration .info-value {
+  color: #18c1f0; 
+}
+
+.info-item.status .info-value {
+  color: #18c1f0; 
+}
+
+.info-item.start-date .info-value {
+  color: #18c1f0; 
+}
+
+.info-item.end-date .info-value {
+  color: #18c1f0;
+}
+
+.info-item.season .info-value {
+  color: #18c1f0; 
+}
+
+.info-item.studio .info-value {
+  color: #18c1f0; 
+}
+
+.info-item.synonyms .info-value {
+  color: #18c1f0; 
+}
 /* Stats */
 .anime-stats {
   display: flex;
@@ -142,7 +176,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color:#ffffff;
   padding: 1.5rem;
   border-radius: 0.5rem;
   backdrop-filter: blur(8px);
