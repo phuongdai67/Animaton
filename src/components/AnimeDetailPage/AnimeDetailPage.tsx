@@ -257,15 +257,20 @@ export default function AnimeDetailPage({ id }: AnimeDetailPageProps) {
   return (
     <div className="anime-detail-page">
       {/* Banner Section */}
-      {anime.bannerImage && (
+      {anime.bannerImage ? (
         <div className="anime-banner">
           <Image
             src={anime.bannerImage}
             alt={anime.title.romaji}
             fill
+            sizes="100vw"
             className="banner-image"
             priority
           />
+          <div className="banner-overlay" />
+        </div>
+      ) : (
+        <div className="anime-banner anime-banner-placeholder">
           <div className="banner-overlay" />
         </div>
       )}
@@ -279,6 +284,7 @@ export default function AnimeDetailPage({ id }: AnimeDetailPageProps) {
                 src={anime.coverImage.extraLarge}
                 alt={anime.title.romaji}
                 fill
+                sizes="(max-width: 768px) 150px, 250px"
                 className="cover-image"
                 priority
               />
@@ -310,105 +316,49 @@ export default function AnimeDetailPage({ id }: AnimeDetailPageProps) {
             </div>
 
             <div className="anime-info-grid">
-              <div className="info-item format">
-                <span
-                  className="info-label"
-                  style={{ color: "#7488a6", fontWeight: "bold" }}
-                >
-                  Format:
-                </span>
+              <div className="info-item">
+                <span className="info-label">Format:</span>
                 <span className="info-value">
                   {getFormatLabel(anime.format)}
                 </span>
               </div>
-
-              <div className="info-item episodes">
-                <span
-                  className="info-label"
-                  style={{ color: "#7488a6", fontWeight: "bold" }}
-                >
-                  Episodes:
-                </span>
+              <div className="info-item">
+                <span className="info-label">Episodes:</span>
                 <span className="info-value">{anime.episodes || "?"}</span>
               </div>
-
-              <div className="info-item duration">
-                <span
-                  className="info-label"
-                  style={{ color: "#7488a6", fontWeight: "bold" }}
-                >
-                  Duration:
-                </span>
+              <div className="info-item">
+                <span className="info-label">Duration:</span>
                 <span className="info-value">
                   {anime.duration ? `${anime.duration} mins` : "?"}
                 </span>
               </div>
-
-              <div className="info-item status">
-                <span
-                  className="info-label"
-                  style={{ color: "#7488a6", fontWeight: "bold" }}
-                >
-                  Status:
-                </span>
+              <div className="info-item">
+                <span className="info-label">Status:</span>
                 <span className="info-value">{anime.status}</span>
               </div>
-
-              <div className="info-item start-date">
-                <span
-                  className="info-label"
-                  style={{ color: "#7488a6", fontWeight: "bold" }}
-                >
-                  Start Date:
-                </span>
+              <div className="info-item">
+                <span className="info-label">Start Date:</span>
                 <span className="info-value">
                   {formatDate(anime.startDate)}
                 </span>
               </div>
-
-              <div className="info-item end-date">
-                <span
-                  className="info-label"
-                  style={{ color: "#7488a6", fontWeight: "bold" }}
-                >
-                  End Date:
-                </span>
+              <div className="info-item">
+                <span className="info-label">End Date:</span>
                 <span className="info-value">{formatDate(anime.endDate)}</span>
               </div>
-
-              <div className="info-item season">
-                <span
-                  className="info-label"
-                  style={{ color: "#7488a6", fontWeight: "bold" }}
-                >
-                  Season:
-                </span>
+              <div className="info-item">
+                <span className="info-label">Season:</span>
                 <span className="info-value">{formatSeason()}</span>
               </div>
-
-              <div className="info-item studio">
-                <span
-                  className="info-label"
-                  style={{ color: "#7488a6", fontWeight: "bold" }}
-                >
-                  Studio:
-                </span>
+              <div className="info-item">
+                <span className="info-label">Studio:</span>
                 <span className="info-value">
                   {mainStudio?.name || "Unknown"}
                 </span>
               </div>
-
               {anime.synonyms && anime.synonyms.length > 0 && (
-                <div
-                  className="info-item synonyms"
-                  style={{ gridColumn: "1 / -1" }}
-                >
-                  <span
-                    className="info-label"
-                    style={{ color: "#7488a6", fontWeight: "bold" }}
-                  >
-                    Synonyms:
-                  </span>
+                <div className="info-item" style={{ gridColumn: "1 / -1" }}>
+                  <span className="info-label">Synonyms:</span>
                   <span className="info-value">
                     {anime.synonyms.join(", ")}
                   </span>
@@ -474,6 +424,7 @@ export default function AnimeDetailPage({ id }: AnimeDetailPageProps) {
                       src={char.node.image.large}
                       alt={char.node.name.full}
                       fill
+                      sizes="(max-width: 768px) 100px, 150px"
                       className="character-image"
                     />
                   </div>
@@ -501,6 +452,7 @@ export default function AnimeDetailPage({ id }: AnimeDetailPageProps) {
                       src={rel.node.coverImage.large}
                       alt={rel.node.title.romaji}
                       fill
+                      sizes="(max-width: 768px) 120px, 180px"
                       className="relation-image"
                     />
                   </div>
@@ -530,6 +482,7 @@ export default function AnimeDetailPage({ id }: AnimeDetailPageProps) {
                         src={rec.mediaRecommendation.coverImage.large}
                         alt={rec.mediaRecommendation.title.romaji}
                         fill
+                        sizes="(max-width: 768px) 120px, 180px"
                         className="recommendation-image"
                       />
                     </div>

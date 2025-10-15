@@ -71,8 +71,8 @@
 
 .cover-image-wrapper {
   position: relative;
-  width: 200px;
-  height: 285px;
+  width: 220px;
+  min-height: 320px;
   border-radius: 0.5rem;
   overflow: hidden;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
@@ -94,48 +94,21 @@
   font-weight: 700;
   margin-bottom: 0.5rem;
   line-height: 1.2;
+  color: #374151;
 }
 
 .anime-subtitle {
   font-size: 1.25rem;
   opacity: 0.8;
   margin-bottom: 1rem;
-}
-.info-item.format .info-value {
-  color: #18c1f0;
+  color: #374151;
 }
 
-.info-item.episodes .info-value {
-  color: #18c1f0; 
-}
-
-.info-item.duration .info-value {
-  color: #18c1f0; 
-}
-
-.info-item.status .info-value {
-  color: #18c1f0; 
-}
-
-.info-item.start-date .info-value {
-  color: #18c1f0; 
-}
-
-.info-item.end-date .info-value {
-  color: #18c1f0;
-}
-
-.info-item.season .info-value {
-  color: #18c1f0; 
-}
-
-.info-item.studio .info-value {
-  color: #18c1f0; 
-}
-
-.info-item.synonyms .info-value {
-  color: #18c1f0; 
-}
+.anime-banner-placeholder {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 300px;
+  position: relative;
+} 
 /* Stats */
 .anime-stats {
   display: flex;
@@ -188,11 +161,13 @@
 }
 
 .info-label {
-  color: #9ca3af;
+  color: #1f2a38;
+  font-weight: bold;
 }
 
 .info-value {
-  font-weight: 600;
+  color: #374151;
+  line-height: 1.75;
 }
 
 /* Section Styles */
