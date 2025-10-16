@@ -1,8 +1,12 @@
 "use client";
-import Header from "../components/Header/Header";
+import { useSearchParams } from "next/navigation";
+import Header from "@/components/Header/Header";
 import AnimeList from "@/components/AnimeList/AnimeList";
 
-export default function Home() {
+export default function AnimeBrowsePage() {
+  const searchParams = useSearchParams();
+  const currentPage = parseInt(searchParams.get("page") || "1");
+
   return (
     <>
       <Header />
@@ -16,20 +20,20 @@ export default function Home() {
           style={{ backgroundColor: "var(--background)" }}
         >
           <div className="container mx-auto px-6 max-w-6xl">
-            <h1 className="text-5xl font-bold mb-4">Anime Collection</h1>
+            <h1 className="text-5xl font-bold mb-4">Animaton</h1>
             <p className="text-xl opacity-90">
-              Khám phá thế giới anime tuyệt vời
+              Khám phá hàng ngàn anime từ khắp nơi trên thế giới
             </p>
           </div>
         </div>
 
-        {/* Reusable AnimeList Component */}
+        {/* Reusable AnimeList Component with Pagination */}
         <AnimeList
-          initialPage={1}
+          initialPage={currentPage}
           perPage={20}
-          showPagination={false}
-          showViewAllButton={true}
-          title="Anime Mới Nhất"
+          showPagination={true}
+          showViewAllButton={false}
+          title="Danh sách Anime mới nhất"
         />
       </div>
     </>
