@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { fetchTopByPeriod } from "../utils/rankingService";
 import AnimeRankingSkeleton from "../SkeletonCard/AnimeRankingSkeleton";
 import "./AnimeRanking.css";
@@ -132,25 +133,27 @@ export default function AnimeRanking({
 
           return (
             <li key={anime.id} className="ranking-item">
-              <span className={`rank-number ${getRankClass()}`}>
-                {index + 1}
-              </span>
+              <Link href={`/anime/${anime.id}`} className="ranking-item-link">
+                <span className={`rank-number ${getRankClass()}`}>
+                  {index + 1}
+                </span>
 
-              <div className="anime-cover">
-                <Image
-                  src={anime.coverImage}
-                  alt={anime.title}
-                  fill
-                  sizes="52px"
-                  style={{ objectFit: "cover" }}
-                />
-              </div>
+                <div className="ranking-cover">
+                  <Image
+                    src={anime.coverImage}
+                    alt={anime.title}
+                    fill
+                    sizes="52px"
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
 
-              <div className="anime-info">
-                <div className="anime-title">{anime.title}</div>
-              </div>
+                <div className="anime-info">
+                  <div className="anime-title">{anime.title}</div>
+                </div>
 
-              <div className="anime-score">{anime.score.toFixed(1)}</div>
+                <div className="anime-score">{anime.score.toFixed(1)}</div>
+              </Link>
             </li>
           );
         })}

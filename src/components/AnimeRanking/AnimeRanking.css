@@ -1,140 +1,152 @@
+
 .ranking-sidebar {
-    width: 100%;
-    max-width: 100%;
-    height: fit-content;
-    overflow: visible;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: #80a6f2;
-    backdrop-filter: blur(6px);
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .ranking-header {
-    padding: 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  
-  .ranking-title {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 700;
-  }
-  
-  .period-tabs {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 6px;
-    margin-top: 12px;
-  }
-  
-  .period-tab {
-    width: 100%;
-    padding: 5px 8px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 600;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: transparent;
-    color: inherit;
-    cursor: pointer;
-    text-align: center;
-  }
-  
-  .period-tab-active {
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    background: rgba(255, 255, 255, 0.08);
-  }
-  
-  .error-message {
-    padding: 12px;
-    color: #fca5a5;
-  }
-  
-  .ranking-list {
-    margin: 0;
-    padding: 12px;
-    list-style: none;
-    overflow-y: visible;
-  }
-  
-  .loading-message {
-    padding: 12px;
-    opacity: 0.8;
-  }
-  
-  .ranking-item {
-    display: grid;
-    grid-template-columns: 28px 52px 1fr auto;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 8px;
-    border-radius: 10px;
-    transition: background 0.2s ease;
-  }
-  
-  .rank-number {
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
-    background: #7d7d7d;
-    display: grid;
-    place-items: center;
-    font-weight: 800;
-    font-size: 13px;
-    color: white;
-  }
-  
-  .rank-1st {
-    background: #ff0000;
-    color: #1a202c;
-  }
-  
-  .rank-2nd {
-    background: #329966;
-    color: #1a202c;
-  }
-  
-  .rank-3rd {
-    background: #407fff;
-    color: white;
-  }
-  
-  .rank-4th {
-    background: #ac8bb3;
-    color: white;
-  }
-  
-  .anime-cover {
-    width: 52px;
-    height: 52px;
-    position: relative;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #111827;
-  }
-  
-  .anime-info {
-    min-width: 0;
-  }
-  
-  .anime-title {
-    font-weight: 600;
-    font-size: 14px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  .anime-score-label {
-    font-size: 12px;
-    opacity: 0.7;
-  }
-  
-  .anime-score {
-    font-weight: 700;
-    font-size: 13px;
-    opacity: 0.9;
-  }
+  width: 100%;
+  max-width: 100%;
+  height: fit-content;
+  overflow: visible;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #80a6f2;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+}
+
+.ranking-header {
+  padding: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ranking-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.period-tabs {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.period-tab {
+  width: 100%;
+  padding: 5px 8px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-align: center;
+}
+
+.period-tab-active {
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.error-message {
+  padding: 12px;
+  color: #fca5a5;
+}
+
+.ranking-list {
+  margin: 0;
+  padding: 12px;
+  list-style: none;
+  overflow-y: visible;
+}
+
+.loading-message {
+  padding: 12px;
+  opacity: 0.8;
+}
+
+.ranking-item {
+  display: block;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+.ranking-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.ranking-item-link {
+  display: grid;
+  grid-template-columns: 28px 52px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 8px;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+}
+
+.rank-number {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #1f2937;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 13px;
+  color: white;
+}
+
+.rank-1st {
+  background: linear-gradient(135deg, #ffd700, #ffed4a); /* Gold */
+  color: #1a202c;
+}
+
+.rank-2nd {
+  background: linear-gradient(135deg, #c0c0c0, #e2e8f0); /* Silver */
+  color: #1a202c;
+}
+
+.rank-3rd {
+  background: linear-gradient(135deg, #cd7f32, #d69e2e); /* Bronze */
+  color: white;
+}
+
+.rank-4th {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6); /* Purple */
+  color: white;
+}
+
+.ranking-cover {
+  width: 52px;
+  height: 52px;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #111827;
+}
+
+.anime-info {
+  min-width: 0;
+}
+
+.anime-title {
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.anime-score-label {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.anime-score {
+  font-weight: 700;
+  font-size: 13px;
+  opacity: 0.9;
+}

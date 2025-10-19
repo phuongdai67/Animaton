@@ -24,25 +24,25 @@
 }
 
 /* Banner Section */
-.anime-banner {
+.anime-detail-page .anime-banner {
   position: relative;
   height: 400px;
   width: 100%;
   overflow: hidden;
 }
 
-.banner-image {
+.anime-detail-page .banner-image {
   object-fit: cover;
 }
 
-.banner-overlay {
+.anime-detail-page .banner-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
 }
 
 /* Container */
-.anime-detail-container {
+.anime-detail-page .anime-detail-container {
   max-width: 1152px;
   margin: 1.5rem auto 0;
   padding: 0 1.5rem;
@@ -51,7 +51,7 @@
 }
 
 /* Header Section */
-.anime-detail-header {
+.anime-detail-page .anime-detail-header {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -59,17 +59,17 @@
 }
 
 @media (min-width: 768px) {
-  .anime-detail-header {
+  .anime-detail-page .anime-detail-header {
     flex-direction: row;
   }
 }
 
-/* Cover Image */
-.anime-cover {
+/* Cover Image - Scoped to detail page */
+.anime-detail-page .anime-cover {
   flex-shrink: 0;
 }
 
-.cover-image-wrapper {
+.anime-detail-page .cover-image-wrapper {
   position: relative;
   width: 220px;
   min-height: 320px;
@@ -79,17 +79,17 @@
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-.cover-image {
+.anime-detail-page .cover-image {
   object-fit: cover;
 }
 
 /* Main Info */
-.anime-main-info {
+.anime-detail-page .anime-main-info {
   flex: 1;
   color: white;
 }
 
-.anime-title {
+.anime-detail-page .anime-title {
   font-size: 2.25rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
@@ -97,81 +97,82 @@
   color: #374151;
 }
 
-.anime-subtitle {
+.anime-detail-page .anime-subtitle {
   font-size: 1.25rem;
   opacity: 0.8;
   margin-bottom: 1rem;
   color: #374151;
 }
 
-.anime-banner-placeholder {
+.anime-detail-page .anime-banner-placeholder {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 300px;
   position: relative;
-} 
+}
+
 /* Stats */
-.anime-stats {
+.anime-detail-page .anime-stats {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
-.stat-card {
+.anime-detail-page .stat-card {
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
 }
 
-.stat-score {
+.anime-detail-page .stat-score {
   background-color: #16a34a;
 }
 
-.stat-popularity {
+.anime-detail-page .stat-popularity {
   background-color: #2563eb;
 }
 
-.stat-favorites {
+.anime-detail-page .stat-favorites {
   background-color: #9333ea;
 }
 
-.stat-value {
+.anime-detail-page .stat-value {
   font-size: 1.5rem;
   font-weight: 700;
 }
 
-.stat-label {
+.anime-detail-page .stat-label {
   font-size: 0.875rem;
   margin-left: 0.5rem;
 }
 
 /* Info Grid */
-.anime-info-grid {
+.anime-detail-page .anime-info-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  background-color:#ffffff;
+  background-color: #ffffff;
   padding: 1.5rem;
   border-radius: 0.5rem;
   backdrop-filter: blur(8px);
 }
 
-.info-item {
+.anime-detail-page .info-item {
   display: flex;
   gap: 0.5rem;
 }
 
-.info-label {
+.anime-detail-page .info-label {
   color: #1f2a38;
   font-weight: bold;
 }
 
-.info-value {
+.anime-detail-page .info-value {
   color: #374151;
   line-height: 1.75;
 }
 
 /* Section Styles */
-.anime-section {
+.anime-detail-page .anime-section {
   margin-top: 2rem;
   background-color: white;
   border-radius: 0.5rem;
@@ -179,7 +180,7 @@
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
-.section-title {
+.anime-detail-page .section-title {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -187,19 +188,19 @@
 }
 
 /* Description */
-.anime-description {
+.anime-detail-page .anime-description {
   color: #374151;
   line-height: 1.75;
 }
 
 /* Genres */
-.genres-container {
+.anime-detail-page .genres-container {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
 }
 
-.genre-tag {
+.anime-detail-page .genre-tag {
   background-color: #dbeafe;
   color: #1e40af;
   padding: 0.5rem 1rem;
@@ -209,40 +210,40 @@
 }
 
 /* Trailer */
-.trailer-container {
+.anime-detail-page .trailer-container {
   aspect-ratio: 16 / 9;
   border-radius: 0.5rem;
   overflow: hidden;
 }
 
-.trailer-iframe {
+.anime-detail-page .trailer-iframe {
   border-radius: 0.5rem;
 }
 
 /* Characters Grid */
-.characters-grid {
+.anime-detail-page .characters-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
 }
 
 @media (min-width: 768px) {
-  .characters-grid {
+  .anime-detail-page .characters-grid {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
 @media (min-width: 1024px) {
-  .characters-grid {
+  .anime-detail-page .characters-grid {
     grid-template-columns: repeat(6, 1fr);
   }
 }
 
-.character-card {
+.anime-detail-page .character-card {
   text-align: center;
 }
 
-.character-image-wrapper {
+.anime-detail-page .character-image-wrapper {
   position: relative;
   width: 100%;
   aspect-ratio: 2 / 3;
@@ -251,11 +252,11 @@
   margin-bottom: 0.5rem;
 }
 
-.character-image {
+.anime-detail-page .character-image {
   object-fit: cover;
 }
 
-.character-name {
+.anime-detail-page .character-name {
   font-size: 0.875rem;
   font-weight: 500;
   color: #1f2937;
@@ -265,40 +266,40 @@
   overflow: hidden;
 }
 
-.character-role {
+.anime-detail-page .character-role {
   font-size: 0.75rem;
   color: #6b7280;
 }
 
 /* Relations Grid */
-.relations-grid {
+.anime-detail-page .relations-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
 }
 
 @media (min-width: 768px) {
-  .relations-grid {
+  .anime-detail-page .relations-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (min-width: 1024px) {
-  .relations-grid {
+  .anime-detail-page .relations-grid {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
-.relation-card {
+.anime-detail-page .relation-card {
   cursor: pointer;
   transition: transform 0.2s;
 }
 
-.relation-card:hover {
+.anime-detail-page .relation-card:hover {
   transform: translateY(-4px);
 }
 
-.relation-image-wrapper {
+.anime-detail-page .relation-image-wrapper {
   position: relative;
   width: 100%;
   aspect-ratio: 2 / 3;
@@ -307,23 +308,23 @@
   margin-bottom: 0.5rem;
 }
 
-.relation-image {
+.anime-detail-page .relation-image {
   object-fit: cover;
   transition: transform 0.3s;
 }
 
-.relation-card:hover .relation-image {
+.anime-detail-page .relation-card:hover .relation-image {
   transform: scale(1.1);
 }
 
-.relation-type {
+.anime-detail-page .relation-type {
   font-size: 0.75rem;
   color: #2563eb;
   font-weight: 600;
   text-transform: uppercase;
 }
 
-.relation-title {
+.anime-detail-page .relation-title {
   font-size: 0.875rem;
   font-weight: 500;
   color: #1f2937;
@@ -334,34 +335,34 @@
 }
 
 /* Recommendations Grid */
-.recommendations-grid {
+.anime-detail-page .recommendations-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
 }
 
 @media (min-width: 768px) {
-  .recommendations-grid {
+  .anime-detail-page .recommendations-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (min-width: 1024px) {
-  .recommendations-grid {
+  .anime-detail-page .recommendations-grid {
     grid-template-columns: repeat(6, 1fr);
   }
 }
 
-.recommendation-card {
+.anime-detail-page .recommendation-card {
   cursor: pointer;
   transition: transform 0.2s;
 }
 
-.recommendation-card:hover {
+.anime-detail-page .recommendation-card:hover {
   transform: translateY(-4px);
 }
 
-.recommendation-image-wrapper {
+.anime-detail-page .recommendation-image-wrapper {
   position: relative;
   width: 100%;
   aspect-ratio: 2 / 3;
@@ -370,16 +371,16 @@
   margin-bottom: 0.5rem;
 }
 
-.recommendation-image {
+.anime-detail-page .recommendation-image {
   object-fit: cover;
   transition: transform 0.3s;
 }
 
-.recommendation-card:hover .recommendation-image {
+.anime-detail-page .recommendation-card:hover .recommendation-image {
   transform: scale(1.1);
 }
 
-.recommendation-title {
+.anime-detail-page .recommendation-title {
   font-size: 0.875rem;
   font-weight: 500;
   color: #1f2937;
@@ -389,7 +390,7 @@
   overflow: hidden;
 }
 
-.recommendation-score {
+.anime-detail-page .recommendation-score {
   font-size: 0.75rem;
   color: #16a34a;
   font-weight: 600;

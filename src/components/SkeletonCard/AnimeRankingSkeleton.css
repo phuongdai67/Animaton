@@ -1,5 +1,3 @@
-/* AnimeRankingSkeleton.css */
-
 .ranking-item-skeleton {
     display: grid;
     grid-template-columns: 28px 52px 1fr auto;
