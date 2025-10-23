@@ -10,7 +10,7 @@ import Button from "@/components/ui/Button/Button";
 import { callAnilistApi } from "@/components/utils/api";
 
 const ANIME_QUERY = `
-query ($page: Int, $perPage: Int) {
+query ($page: Int, $perPage: Int, $sort: [MediaSort]) {
   Page(page: $page, perPage: $perPage) {
     pageInfo {
       total
@@ -19,7 +19,7 @@ query ($page: Int, $perPage: Int) {
       hasNextPage
       perPage
     }
-    media(type: ANIME, sort: TRENDING_DESC) {
+    media(type: ANIME, sort: $sort) {
       id
       title {
         romaji
@@ -31,6 +31,7 @@ query ($page: Int, $perPage: Int) {
       }
       episodes
       genres
+      averageScore
     }
   }
 }
@@ -72,7 +73,7 @@ export default function AnimeList({
   perPage = 20,
   showPagination = false,
   showViewAllButton = false,
-  title = "Anime Mới Nhất",
+  title = "Anime Hot Nhất",
   subtitle,
 }: AnimeListProps) {
   const router = useRouter();

@@ -29,7 +29,7 @@ export default function Home() {
           perPage={20}
           showPagination={false}
           showViewAllButton={true}
-          title="Anime Mới Nhất"
+          title="Anime Hot Nhất"
         />
       </div>
     </>

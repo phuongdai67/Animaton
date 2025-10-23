@@ -33,7 +33,7 @@ export default function AnimeBrowsePage() {
           perPage={20}
           showPagination={true}
           showViewAllButton={false}
-          title="Danh sách Anime mới nhất"
+          title="Danh sách Anime hot nhất"
         />
       </div>
     </>
