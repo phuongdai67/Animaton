@@ -1,0 +1,65 @@
+.character-card-container {
+    position: relative;
+    width: 100%;
+  }
+  
+  .character-card-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .character-card {
+    background-color: transparent !important;
+    height: 320px;
+    box-shadow: none !important;
+    transition: 0.2s ease;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .character-card:hover .character-card-title {
+    color: #5b8def;
+  }
+  
+  .character-card-image {
+    height: 153px;
+    animation: opacity 0.3s;
+    box-shadow: none;
+    width: 100%;
+    max-width: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 8px;
+  }
+  
+  @media (min-width: 768px) {
+    .character-card-image {
+      height: 265px;
+    }
+  }
+  
+  .character-card-title {
+    margin-top: 8px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: #4a5568;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  @keyframes opacity {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }

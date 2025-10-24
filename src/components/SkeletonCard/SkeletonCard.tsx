@@ -4,7 +4,6 @@ import Stack from "@mui/material/Stack";
 
 import { CARD_TYPES } from "../../components/utils/constants";
 import "./SkeletonCard.css";
-// Import AnimeCard CSS to use its classes
 import "../cards/AnimeCard.css";
 
 interface SkeletonCardProps {
