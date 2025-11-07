@@ -10,7 +10,7 @@ import Button from "@/components/ui/Button/Button";
 import { callAnilistApi } from "@/components/utils/api";
 
 const ANIME_QUERY = `
-query ($page: Int, $perPage: Int, $sort: [MediaSort]) {
+query ($page: Int, $perPage: Int, $sort: [MediaSort], $search: String) {
   Page(page: $page, perPage: $perPage) {
     pageInfo {
       total
@@ -19,7 +19,7 @@ query ($page: Int, $perPage: Int, $sort: [MediaSort]) {
       hasNextPage
       perPage
     }
-    media(type: ANIME, sort: $sort) {
+    media(type: ANIME, sort: $sort, search: $search) {
       id
       title {
         romaji
@@ -66,6 +66,7 @@ interface AnimeListProps {
   showViewAllButton?: boolean;
   title?: string;
   subtitle?: string;
+  searchQuery?: string; // Thêm prop search query
 }
 
 export default function AnimeList({
@@ -75,6 +76,7 @@ export default function AnimeList({
   showViewAllButton = false,
   title = "Anime Hot Nhất",
   subtitle,
+  searchQuery, // Nhận search query từ parent
 }: AnimeListProps) {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(initialPage);
@@ -89,12 +91,22 @@ export default function AnimeList({
         setLoading(true);
         setError(null);
 
-        const response = await callAnilistApi<{
-          Page: { pageInfo: PageInfo; media: Anime[] };
-        }>(ANIME_QUERY, {
+        const variables: any = {
           page: currentPage,
           perPage,
-        });
+        };
+
+        // Nếu có search query thì thêm vào variables
+        if (searchQuery) {
+          variables.search = searchQuery;
+          variables.sort = ["SEARCH_MATCH"]; // Sort by search relevance
+        } else {
+          variables.sort = ["POPULARITY_DESC"]; // Default sort
+        }
+
+        const response = await callAnilistApi<{
+          Page: { pageInfo: PageInfo; media: Anime[] };
+        }>(ANIME_QUERY, variables);
 
         setAnimeList(response.Page.media);
         setPageInfo(response.Page.pageInfo);
@@ -107,15 +119,24 @@ export default function AnimeList({
     };
 
     fetchAnime();
-  }, [currentPage, perPage]);
+  }, [currentPage, perPage, searchQuery]); // Thêm searchQuery vào dependencies
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     if (showPagination) {
-      router.push(`/anime?page=${page}`);
+      // Nếu có search query, giữ lại trong URL
+      const url = searchQuery
+        ? `/anime?search=${encodeURIComponent(searchQuery)}&page=${page}`
+        : `/anime?page=${page}`;
+      router.push(url);
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  // Dynamic title based on search
+  const displayTitle = searchQuery
+    ? `Kết quả tìm kiếm cho "${searchQuery}"`
+    : title;
 
   return (
     <div className="container mx-auto px-6 max-w-6xl py-8">
@@ -125,12 +146,20 @@ export default function AnimeList({
           <div className="mb-8">
             <div className="flex justify-between items-center mb-6">
               <div>
-                <h2 className="text-3xl font-bold text-gray-800">{title}</h2>
+                <h2 className="text-3xl font-bold text-gray-800">
+                  {displayTitle}
+                </h2>
                 {subtitle && <p className="text-gray-600 mt-1">{subtitle}</p>}
+                {/* Hiển thị số kết quả tìm kiếm */}
+                {searchQuery && pageInfo && (
+                  <p className="text-gray-600 mt-2">
+                    Tìm thấy {pageInfo.total} kết quả
+                  </p>
+                )}
               </div>
               {showPagination && pageInfo && (
                 <span className="text-gray-600">
-                  Page {pageInfo.currentPage} of {pageInfo.lastPage}
+                  Trang {pageInfo.currentPage} / {pageInfo.lastPage}
                 </span>
               )}
             </div>
@@ -175,20 +204,42 @@ export default function AnimeList({
               </div>
             )}
 
-            {/* View All Button (for homepage) */}
-            {showViewAllButton && !loading && pageInfo?.hasNextPage && (
-              <div className="flex justify-center py-8">
+            {/* No results found for search */}
+            {!loading && searchQuery && animeList.length === 0 && (
+              <div className="text-center py-16">
+                <div className="text-6xl mb-4">🔍</div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-2">
+                  Không tìm thấy kết quả
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  Không tìm thấy anime nào phù hợp với "{searchQuery}"
+                </p>
                 <Button
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold"
-                  href="/anime?page=2"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg"
+                  href="/anime"
                 >
-                  Xem tất cả →
+                  Xem tất cả anime
                 </Button>
               </div>
             )}
 
+            {/* View All Button (for homepage) */}
+            {showViewAllButton &&
+              !loading &&
+              !searchQuery &&
+              pageInfo?.hasNextPage && (
+                <div className="flex justify-center py-8">
+                  <Button
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold"
+                    href="/anime?page=2"
+                  >
+                    Xem tất cả →
+                  </Button>
+                </div>
+              )}
+
             {/* Pagination (for browse page) */}
-            {showPagination && !loading && pageInfo && (
+            {showPagination && !loading && pageInfo && animeList.length > 0 && (
               <Pagination
                 currentPage={pageInfo.currentPage}
                 totalPages={pageInfo.lastPage}
@@ -197,58 +248,18 @@ export default function AnimeList({
             )}
 
             {/* No more data */}
-            {!loading && !pageInfo?.hasNextPage && !showPagination && (
-              <div className="text-center py-8 text-gray-500">
-                <p>Đã tải hết tất cả anime!</p>
-              </div>
-            )}
+            {!loading &&
+              !searchQuery &&
+              !pageInfo?.hasNextPage &&
+              !showPagination && (
+                <div className="text-center py-8 text-gray-500">
+                  <p>Đã tải hết tất cả anime!</p>
+                </div>
+              )}
           </div>
 
-          {/* Stats Section */}
-          {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <div className="text-3xl font-bold text-blue-600 mb-2">
-                {showPagination ? pageInfo?.total || 0 : animeList.length}
-              </div>
-              <div className="text-gray-600">
-                {showPagination ? "Total Anime" : "Anime Đã Tải"}
-              </div>
-            </div>
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <div className="text-3xl font-bold text-green-600 mb-2">
-                {animeList.reduce(
-                  (total, anime) => total + (anime.episodes || 0),
-                  0
-                )}
-                +
-              </div>
-              <div className="text-gray-600">
-                {showPagination ? "Episodes on This Page" : "Tổng Episodes"}
-              </div>
-            </div>
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-              <div className="text-3xl font-bold text-purple-600 mb-2">
-                {showPagination
-                  ? `${pageInfo?.currentPage || 0}/${pageInfo?.lastPage || 0}`
-                  : loading
-                  ? "..."
-                  : pageInfo?.hasNextPage
-                  ? "∞"
-                  : "✓"}
-              </div>
-              <div className="text-gray-600">
-                {showPagination
-                  ? "Current Page"
-                  : loading
-                  ? "Đang tải..."
-                  : pageInfo?.hasNextPage
-                  ? "Còn nhiều hơn"
-                  : "Hoàn thành"}
-              </div>
-            </div>
-          </div> */}
-
-          <PopularGenres animeList={animeList} />
+          {/* Only show PopularGenres if not searching */}
+          {!searchQuery && <PopularGenres animeList={animeList} />}
         </div>
 
         {/* Right Sidebar */}

@@ -21,10 +21,11 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import React from "react";
+import React, { useState } from "react";
 import "./Header.css";
 import NavBar from "../Navbar/Navbar";
 import SearchBar from "../SearchBar/SearchBar";
+import { useRouter } from "next/navigation";
 
 const browseItems = [
   { Icon: FilterIcon, label: "Anime", linkTo: "/anime" },
@@ -36,29 +37,36 @@ const browseItems = [
     linkTo: "/characters",
   },
 ];
-const Header: React.FC = () => {
-  // State để quản lý mobile menu
-  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
-  // Function để toggle mobile menu
+const Header: React.FC = () => {
+  const router = useRouter();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+
   const handleMobileMenuToggle = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
-  // Function để đóng mobile menu
   const handleMobileMenuClose = () => {
     setMobileMenuOpen(false);
   };
 
-  // Search handlers
+  // Search handler - redirect to /anime with search query
   const handleHeaderSearch = (query: string) => {
-    console.log("Header search:", query);
-    // TODO: Implement global search functionality
+    if (!query.trim()) return;
+
+    // Redirect to anime page with search parameter
+    router.push(`/anime?search=${encodeURIComponent(query.trim())}`);
+
+    // Close mobile menu if open
+    if (mobileMenuOpen) {
+      handleMobileMenuClose();
+    }
   };
 
+  // Search change handler
   const handleHeaderSearchChange = (query: string) => {
-    console.log("Header search query changed:", query);
-    // TODO: Implement global search suggestions
+    setSearchValue(query);
   };
 
   return (
@@ -90,9 +98,10 @@ const Header: React.FC = () => {
             }}
           >
             <SearchBar
-              placeholder="Tìm kiếm..."
+              placeholder="Tìm kiếm anime..."
               onSearch={handleHeaderSearch}
               onChange={handleHeaderSearchChange}
+              value={searchValue}
               variant="outlined"
               fullWidth={true}
             />
@@ -148,9 +157,10 @@ const Header: React.FC = () => {
         {/* SearchBar - Mobile */}
         <Box sx={{ padding: 2, borderBottom: "1px solid #333" }}>
           <SearchBar
-            placeholder="Tìm kiếm..."
+            placeholder="Tìm kiếm anime..."
             onSearch={handleHeaderSearch}
             onChange={handleHeaderSearchChange}
+            value={searchValue}
             variant="outlined"
             fullWidth={true}
           />
