@@ -51,12 +51,18 @@ const Header: React.FC = () => {
     setMobileMenuOpen(false);
   };
 
-  // Search handler - redirect to /anime with search query
+  // Search handler - redirect với intelligent routing
   const handleHeaderSearch = (query: string) => {
     if (!query.trim()) return;
 
-    // Redirect to anime page with search parameter
-    router.push(`/anime?search=${encodeURIComponent(query.trim())}`);
+    // Check current path để quyết định redirect về anime hay manga
+    const currentPath = window.location.pathname;
+
+    // Nếu đang ở trang manga, search trong manga
+    // Nếu đang ở trang anime hoặc bất kỳ trang nào khác, search trong anime
+    const searchPath = currentPath.startsWith("/manga") ? "/manga" : "/anime";
+
+    router.push(`${searchPath}?search=${encodeURIComponent(query.trim())}`);
 
     // Close mobile menu if open
     if (mobileMenuOpen) {
