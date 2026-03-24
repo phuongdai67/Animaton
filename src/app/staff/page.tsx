@@ -2,7 +2,7 @@
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Header from "@/components/Header/Header";
-import StaffList from "@/components/StaffList/StaffList";
+import CharacterList from "@/components/CharacterList/CharacterList";
 
 function StaffBrowseContent() {
   const searchParams = useSearchParams();
@@ -25,7 +25,7 @@ function StaffBrowseContent() {
         </div>
       </div>
 
-      <StaffList
+      <CharacterList
         initialPage={currentPage}
         perPage={24}
         showPagination={true}
