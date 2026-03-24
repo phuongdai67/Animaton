@@ -1,13 +1,49 @@
-import Header from "../../components/Header/Header";
+"use client";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import Header from "@/components/Header/Header";
+import StaffList from "@/components/StaffList/StaffList";
 
-export default function StaffPage() {
+function StaffBrowseContent() {
+  const searchParams = useSearchParams();
+  const currentPage = parseInt(searchParams.get("page") || "1");
+
+  return (
+    <div
+      className="min-h-screen header-spacing"
+      style={{ backgroundColor: "var(--background)" }}
+    >
+      <div
+        className="text-gray-900 py-16"
+        style={{ backgroundColor: "var(--background)" }}
+      >
+        <div className="container mx-auto px-6 max-w-6xl">
+          <h1 className="text-5xl font-bold mb-4">Browse Staff</h1>
+          <p className="text-xl opacity-90">
+            Khám phá các tác giả và họa sĩ nổi tiếng
+          </p>
+        </div>
+      </div>
+
+      <StaffList
+        initialPage={currentPage}
+        perPage={24}
+        showPagination={true}
+        showViewAllButton={false}
+        title="Popular Staff"
+        sort={["FAVOURITES_DESC"]}
+      />
+    </div>
+  );
+}
+
+export default function StaffBrowsePage() {
   return (
     <>
       <Header />
-      <div className="min-h-screen p-8 header-spacing">
-        <h1 className="text-4xl font-bold mb-8">Staff</h1>
-        <p className="text-lg">Trang Staff - Thông tin về đội ngũ sản xuất</p>
-      </div>
+      <Suspense>
+        <StaffBrowseContent />
+      </Suspense>
     </>
   );
 }
